@@ -15,6 +15,9 @@
   },
   "files.encoding": "utf8",
   "files.eol": "\n",
+  "[python]": {
+    "editor.defaultFormatter": "charliermarsh.ruff"
+  },
   "files.exclude": {
     "**/__pycache__": true,
     "**/*.egg-info": true,

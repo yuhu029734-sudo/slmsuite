@@ -37,6 +37,13 @@ GitHub 账号：yuhu029734-sudo。
    VS Code 的源代码管理面板也可以提交、拉取、推送。
    每台设备都需要用自己的 Git 凭据管理器登录同一个 GitHub 账号。
    VS Code Settings Sync 同步编辑器偏好；项目代码通过 Git 提交和推送同步。
+   本机 Git 使用已有系统代理 http://127.0.0.1:7890 连接 GitHub。
+   该设置只保存在本机 .git/config，其他设备按各自网络配置。
+   如果以后停用代理，可执行：
+     git config --local --unset http.https://github.com.proxy
+
+   VS Code 已安装/推荐：Python、Pylance、Python Debugger、Python Environments、
+   Jupyter、Ruff。Ruff 用于 Python 格式化；数值计算包安装在 .venv 中。
 
 4. 官方更新
    upstream 指向 holodyne/slmsuite；origin 指向自己的 Fork。
