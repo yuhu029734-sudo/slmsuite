@@ -1,0 +1,3 @@
+# Editable checkout, notebooks, hardware-free tests, and common SLM interfaces.
+-e .[jupyter,test,slms]
+ruff==0.17.*

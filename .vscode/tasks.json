@@ -1,0 +1,57 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "slmsuite: Set up Python environment",
+      "type": "process",
+      "command": "powershell.exe",
+      "args": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "${workspaceFolder}/scripts/setup.ps1"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "slmsuite: Set up CUDA 13 GPU environment",
+      "type": "process",
+      "command": "powershell.exe",
+      "args": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "${workspaceFolder}/scripts/setup.ps1",
+        "-Gpu"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "slmsuite: Check environment",
+      "type": "process",
+      "command": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "args": ["${workspaceFolder}/scripts/check_environment.py"],
+      "problemMatcher": [],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "slmsuite: Fast tests",
+      "type": "process",
+      "command": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "args": [
+        "-m",
+        "pytest",
+        "-m",
+        "not gpu and not slow",
+        "--benchmark-disable"
+      ],
+      "options": {"cwd": "${workspaceFolder}", "env": {"MPLBACKEND": "Agg"}},
+      "problemMatcher": []
+    }
+  ]
+}

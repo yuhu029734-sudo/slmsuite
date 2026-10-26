@@ -47,6 +47,12 @@ build/
 # editor
 *.claude
 *.vscode
+!/.vscode/
+/.vscode/*
+!/.vscode/settings.json
+!/.vscode/extensions.json
+!/.vscode/launch.json
+!/.vscode/tasks.json
 *~
 \#*
 .\#*
@@ -60,3 +66,7 @@ tests/output/
 
 # local
 keys.json
+
+# Local setup tools and notebook experiments
+/.tools/
+!experiments/*.ipynb

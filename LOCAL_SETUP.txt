@@ -1,0 +1,65 @@
+slmsuite 本地开发与跨设备同步
+
+项目来源：https://github.com/holodyne/slmsuite
+Python：3.12；每台设备在项目根目录单独建立 .venv。
+GitHub 提交邮箱：yuhu029734@gmail.com。
+GitHub 账号：yuhu029734-sudo。
+同步仓库：https://github.com/yuhu029734-sudo/slmsuite
+
+1. 本机使用
+   用 VS Code 打开整个项目文件夹。
+   Python 解释器选择 .venv\Scripts\python.exe。
+   Notebook 右上角选择内核：Python Environments -> 本项目 .venv。
+   新开的 VS Code 终端已经将 .venv\Scripts 加入 PATH，可直接运行 python 和 pip。
+   Ctrl+Shift+B 执行环境检查；F5 调试当前 Python 文件。
+
+2. 其他 Windows 设备首次配置
+   安装 Git、Python 3.12 和 VS Code 的 Python、Jupyter 扩展。
+   从自己的 Fork 克隆项目：
+     git clone https://github.com/yuhu029734-sudo/slmsuite.git "optical tweezers"
+     cd "optical tweezers"
+   在项目根目录运行：
+     powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\setup.ps1
+   如果该设备有支持 CUDA 13 的 NVIDIA 显卡，则运行：
+     powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\setup.ps1 -Gpu
+   setup.ps1 会建立 .venv，安装依赖并运行检查；不会修改系统执行策略。
+   requirements-windows-py312.txt 固定已验证的基础依赖版本，GPU 为可选安装。
+   每台设备的 Git 身份需要单独设置一次：
+     git config --local user.name yuhu029734-sudo
+     git config --local user.email yuhu029734@gmail.com
+     git config --local credential.https://github.com.username yuhu029734-sudo
+
+3. 日常同步
+   开始工作前：git pull --rebase
+   保存改动后：git add <要同步的文件>
+               git commit -m "Describe the change"
+               git push
+   VS Code 的源代码管理面板也可以提交、拉取、推送。
+   每台设备都需要用自己的 Git 凭据管理器登录同一个 GitHub 账号。
+   VS Code Settings Sync 同步编辑器偏好；项目代码通过 Git 提交和推送同步。
+
+4. 官方更新
+   upstream 指向 holodyne/slmsuite；origin 指向自己的 Fork。
+   其他设备克隆 Fork 后，首次添加上游：
+     git remote add upstream https://github.com/holodyne/slmsuite.git
+   获取官方更新：git fetch upstream
+   将更新合并到当前分支：git merge upstream/main
+   合并并验证通过后再 git push。
+
+5. 环境检查与测试
+   .\.venv\Scripts\python.exe scripts\check_environment.py
+   .\.venv\Scripts\python.exe scripts\check_environment.py --require-gpu
+   .\.venv\Scripts\python.exe -m pip check
+   .\.venv\Scripts\python.exe -m pytest -m "not gpu and not slow" --benchmark-disable
+
+6. 文件同步范围
+   源码、环境安装脚本、依赖清单、四个 VS Code 配置文件可以提交同步。
+   .venv、缓存、二进制驱动和实验数据遵循 .gitignore，不应推送。
+   官方默认忽略所有 .ipynb；experiments/ 下的 Notebook 已例外允许同步。
+   新建 Notebook 时可使用 experiments/ 文件夹。
+
+7. 硬件
+   默认安装数值计算、Jupyter、测试和通用 SLM Python 依赖。
+   CUDA 13 的 CuPy 及运行库通过 -Gpu 选项安装在虚拟环境中。
+   真正连接 SLM 或相机时，还需要按具体型号安装厂商 SDK/驱动。
+   GS/WGS 算法可直接使用；梯度优化 CG 所需的 PyTorch 是额外可选依赖。

@@ -1,0 +1,5 @@
+# Optional NVIDIA acceleration; requires a driver supporting CUDA 13.
+# The ctk extra supplies CUDA libraries inside .venv, including NVRTC and cuFFT.
+cupy-cuda13x[ctk]==14.2.0
+# Match this workstation's CUDA 13.3 driver for NVRTC kernel compilation.
+cuda-toolkit==13.3.1
